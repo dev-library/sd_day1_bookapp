@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Book List</title></head>
+<body>
+<h1>Books</h1>
+<a th:href="@{/books/new}">+ Add Book</a>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Release Date</th>
+        <th>Amazon Rating</th>
+        <th>Bestseller</th>
+        <th>Price (KRW)</th>
+        <th>Price (USD)</th>
+        <th>Action</th>
+    </tr>
+	<tr th:each="book : ${books}">
+	    <td>
+	        <a th:href="@{|/books/${book.id}|}" th:text="${book.title}"></a>
+	    </td>
+	    <td th:text="${book.author}"></td>
+	    <td th:text="${book.releaseDate}"></td>
+	    <td th:text="${book.amazonRating}"></td>
+	    <td th:text="${book.bestSeller} ? 'Yes' : 'No'"></td>
+	    <td th:text="|${#numbers.formatInteger(book.priceKrw, 0, 'COMMA')} ₩|"></td>
+	    <td th:text="|$${#numbers.formatDecimal(book.priceUsd, 1, 2)}|"></td>
+	    <td>
+	        <a th:href="@{|/books/${book.id}/edit|}">Edit</a>
+	        <form th:action="@{|/books/${book.id}/delete|}" method="post" style="display:inline;">
+	            <button type="submit">Delete</button>
+	        </form>
+	    </td>
+	</tr>
+</table>
+</body>
+</html>

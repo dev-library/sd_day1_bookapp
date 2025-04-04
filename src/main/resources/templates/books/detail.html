@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Book Detail</title></head>
+<body>
+<h1>Book Detail</h1>
+
+<table>
+    <tr><th>Title</th><td th:text="${book.title}"></td></tr>
+    <tr><th>Author</th><td th:text="${book.author}"></td></tr>
+    <tr><th>Release Date</th><td th:text="${book.releaseDate}"></td></tr>
+    <tr><th>Amazon Rating</th><td th:text="${book.amazonRating}"></td></tr>
+    <tr><th>Bestseller</th><td th:text="${book.bestSeller} ? 'Yes' : 'No'"></td></tr>
+    <tr>
+        <th>Price (KRW)</th>
+        <td th:text="|${#numbers.formatInteger(book.priceKrw, 0, 'COMMA')} ₩|"></td>
+    </tr>
+    <tr>
+        <th>Price (USD)</th>
+        <td th:text="|$${#numbers.formatDecimal(book.priceUsd, 1, 2)}|"></td>
+    </tr>
+</table>
+
+<br/>
+<a th:href="@{/books}">← Back to List</a>
+<a th:href="@{|/books/${book.id}/edit|}">Edit</a>
+<form th:action="@{|/books/${book.id}/delete|}" method="post" style="display:inline;">
+    <button type="submit">Delete</button>
+</form>
+
+</body>
+</html>
